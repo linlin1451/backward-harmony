@@ -18,6 +18,9 @@ concurrency:
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backward-harmony
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -37,7 +40,7 @@ jobs:
       - name: Collect the site files
         run: |
           mkdir _site
-          cp -r index.html styles.css src _site/
+          cp -r backward-harmony/index.html backward-harmony/styles.css backward-harmony/src _site/
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:
