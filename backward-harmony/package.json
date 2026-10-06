@@ -1,0 +1,15 @@
+{
+  "name": "backward-harmony",
+  "version": "1.0.0",
+  "description": "Write chord progressions backward from the final chord: weighted common-practice rules plus authentic, plagal, deceptive, half and tritone-substitute cadences into any chord, with borrowed and secondary chords, inversions, split bars, playback and MIDI export.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "test": "node --test",
+    "build:single": "node tools/build-single-file.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

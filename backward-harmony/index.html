@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Backward harmony</title>
+<meta name="description" content="Generate chord progressions backward from the final chord, with cadences into every chord, borrowed and secondary chords, tritone substitutions, inversions and MIDI export.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎹</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main>
+  <h1>Backward harmony</h1>
+  <p class="lede">The last chord is fixed first, then the first chord of every earlier bar is chosen backward from weighted rules and from the cadences that can lead into the chord after it. Divide any bar into two to four parts; new parts hold the bar's chord until you pick something else. Swap any chord, change its inversion, then play it or take it into your DAW as MIDI.</p>
+
+  <div class="controls">
+    <label class="field"><span class="lab">Key</span><select id="key"></select></label>
+
+    <div class="field"><span class="lab">Bars</span>
+      <div class="stepper">
+        <button id="less" aria-label="Fewer bars">−</button>
+        <output id="len">4</output>
+        <button id="more" aria-label="More bars">+</button>
+      </div>
+    </div>
+
+    <label class="field"><span class="lab">Borrowed chords <span class="num" id="borrowVal">25%</span></span>
+      <input type="range" id="borrow" min="0" max="100" value="25"></label>
+    <label class="field"><span class="lab">Secondary chords <span class="num" id="chromaVal">30%</span></span>
+      <input type="range" id="chroma" min="0" max="100" value="30"></label>
+    <label class="field"><span class="lab">Inversions <span class="num" id="invVal">20%</span></span>
+      <input type="range" id="inversions" min="0" max="100" value="20"></label>
+    <label class="field"><span class="lab">Tempo <span class="num" id="bpmVal">90</span> bpm</span>
+      <input type="range" id="bpm" min="50" max="180" value="90"></label>
+  </div>
+
+  <div class="actions">
+    <button class="btn primary" id="gen">Generate</button>
+    <button class="btn quiet" id="undo" title="Undo (Ctrl+Z or ⌘Z)" disabled>Undo</button>
+    <button class="btn quiet" id="redo" title="Redo (Ctrl+Shift+Z or ⌘⇧Z)" disabled>Redo</button>
+    <button class="btn" id="play">Play</button>
+    <label class="check"><input type="checkbox" id="loop"> Loop</label>
+    <button class="btn quiet" id="midi">Download MIDI</button>
+    <button class="btn quiet" id="clear" hidden>Clear my changes</button>
+    <span class="status" id="status" role="status"></span>
+  </div>
+
+  <div class="direction"><span>Earlier bars, derived backward</span><span>Final chord</span></div>
+  <div class="bars" id="bars"></div>
+
+  <section class="editor" id="editor" hidden aria-label="Change chord"></section>
+
+  <div class="sheet" id="sheet" aria-label="Lead sheet"></div>
+
+  <div class="legend">
+    <span><i style="color:var(--tonic)"></i>Tonic</span>
+    <span><i style="color:var(--pre)"></i>Predominant</span>
+    <span><i style="color:var(--dom)"></i>Dominant</span>
+    <span><i style="color:var(--muted);border-top-style:dashed"></i>Borrowed from the parallel key</span>
+    <span><i style="color:var(--muted);border-top-style:dotted"></i>Secondary or substitute</span>
+  </div>
+  <svg class="piano" id="piano" viewBox="0 0 290 46" aria-hidden="true"></svg>
+  <p class="keys-hint"><kbd>G</kbd> generate &nbsp; <kbd>Ctrl</kbd><kbd>Z</kbd> undo &nbsp; <kbd>Space</kbd> play or stop &nbsp; <kbd>←</kbd><kbd>→</kbd> move between chords &nbsp; <kbd>Esc</kbd> close the editor</p>
+</main>
+<script type="module" src="src/app.js"></script>
+</body>
+</html>
